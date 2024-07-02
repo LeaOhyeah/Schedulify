@@ -31,7 +31,12 @@ class LoginController extends Controller
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->intended('dashboard'); 
+            $user = Auth::user();
+            if ($user->role === 'admin_master') {
+                return redirect()->intended('/dashboard-master');
+            } elseif ($user->role === 'admin_jurusan') {
+                return redirect()->intended('/dashboard-jurusan');
+            }
         }
 
         return back()->withErrors(['error' => 'Email atau password salah.'])->withInput();

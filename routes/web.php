@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminMasterController;
+use App\Http\Controllers\AdminJurusanController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/', function () {
@@ -16,3 +18,12 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 // Route::post('password/email', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 // Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 // Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
+Route::middleware(['auth', 'admin_master'])->group(function () {
+    Route::get('dashboard-master', [AdminMasterController::class, 'index']);
+});
+
+Route::middleware(['auth', 'admin_jurusan'])->group(function () {
+    Route::get('dashboard-jurusan', [AdminJurusanController::class, 'index']);  
+});
