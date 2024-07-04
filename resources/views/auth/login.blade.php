@@ -1,10 +1,9 @@
-@extends('layouts.main')
+@extends('auth.layouts.main')
 
 @section('title', 'Login')
 
 
 @section('content')
-
     <body class="bg-gradient-primary">
 
         <div class="container">

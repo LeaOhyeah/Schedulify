@@ -8,6 +8,10 @@ class AdminJurusanController extends Controller
 {
     public function index()
     {
-        return "halo bang admin jurusan";
+        return view('admin_jurusan.index');
+    }
+
+    public function agenda(){
+        return view('admin_jurusan.agenda');
     }
 }

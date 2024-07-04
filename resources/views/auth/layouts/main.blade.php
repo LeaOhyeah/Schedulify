@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('layouts.head')
+@include('auth.layouts.head')
 
 @yield('content')
 
-@include('layouts.foot')
+@include('auth.layouts.foot')
 
 </html>
