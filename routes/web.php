@@ -27,5 +27,6 @@ Route::middleware(['auth', 'admin_master'])->group(function () {
 Route::middleware(['auth', 'admin_jurusan'])->group(function () {
     Route::get('dashboard-jurusan', [AdminJurusanController::class, 'index'])->name('admin_jurusan.index');  
     Route::get('dashboard-jurusan/agenda', [AdminJurusanController::class, 'agenda'])->name('agenda.index');  
+    Route::get('dashboard-jurusan/agenda/baru', [AdminJurusanController::class, 'create'])->name('agenda.create');  
 
 });

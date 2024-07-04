@@ -1,5 +1,5 @@
 @extends('admin_jurusan.layouts.main')
-@section('title', 'Dashboard (Nama Jurusan)' )
+@section('title', 'Dashboard (Nama Jurusan)')
 
 @section('css')
     <!-- Custom fonts for this template-->
@@ -19,7 +19,6 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard (Nama Jurusan)</h1>
-
         </div>
 
         <!-- Content Row -->
@@ -115,10 +114,10 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('template/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    {{-- <!-- Page level plugins -->
+    <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ asset('template/js/demo/datatables-demo.js') }}"></script>
+    <script src="{{ asset('template/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('template/js/demo/chart-pie-demo.js') }}"></script> --}}
 @endsection
