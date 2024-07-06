@@ -25,4 +25,22 @@ class AdminJurusanController extends Controller
     {
         return view('admin_jurusan.create');
     }
+
+    public function edit($id)
+    {
+        $data = Meeting::findOrFail($id);
+        return view('admin_jurusan.edit', $data);
+    }
+
+    public function update(Request $request)
+    {
+        
+    }
+
+    public function destroy($id)
+    {
+        $agenda = Meeting::findOrFail($id);
+        $agenda->delete();
+        return redirect('/dashboard-jurusan/agenda')->with('success', 'Data berhasil dihapus');
+    }
 }

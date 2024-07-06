@@ -21,6 +21,14 @@
 
         <!-- Page Heading -->
 
+        @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -48,6 +56,7 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -58,17 +67,49 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @foreach ($meetings as $m)
                                 <tr>
-                                    <td>{{ $m->activity }}</td>
-                                    <td>{{ $m->date }}</td>
-                                    <td>{{ $m->location }}</td>
-                                    <td>{{ $m->start_time }}</td>
-                                    <td>{{ $m->end_time ?? 'Sampai Selesai' }}</td>
-                                    <td>{{ $m->pic }}</td>
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->activity }}
+                                        </a>
+                                    </td>
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->date }}
+                                        </a>
+                                    </td>
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->location }}
+                                        </a>
+                                    </td>
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->start_time }}
+                                        </a>
+                                    </td>
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->end_time ?? 'Sampai Selesai' }}
+                                        </a>
+                                    </td>
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('agenda.edit', $m->id) }}">
+                                            {{ $m->pic }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('agenda.destroy', $m->id) }}" method="POST"
+                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $m->activity }}?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger btn-circle">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

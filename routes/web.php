@@ -28,5 +28,7 @@ Route::middleware(['auth', 'admin_jurusan'])->group(function () {
     Route::get('dashboard-jurusan', [AdminJurusanController::class, 'index'])->name('admin_jurusan.index');  
     Route::get('dashboard-jurusan/agenda', [AdminJurusanController::class, 'agenda'])->name('agenda.index');  
     Route::get('dashboard-jurusan/agenda/baru', [AdminJurusanController::class, 'create'])->name('agenda.create');  
+    Route::get('dashboard-jurusan/agenda/edit/{id}', [AdminJurusanController::class, 'edit'])->name('agenda.edit');  
+    Route::delete('dashboard-jurusan/agenda/hapus/{id}', [AdminJurusanController::class, 'destroy'])->name('agenda.destroy');  
 
 });
