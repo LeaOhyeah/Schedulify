@@ -12,6 +12,30 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    // Relation on model Meeting
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
+    }
+
+    // Check if user is admin master
+    public function isAdminMaster()
+    {
+        return $this->role === 'admin_master';
+    }
+
+    // Check if user is admin jurusan
+    public function isAdminJurusan()
+    {
+        return $this->role === 'admin_jurusan';
+    }
+
+    // Default role
+    protected $attributes = [
+        'role' => 'admin_jurusan',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +45,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'department',
     ];
 
     /**
