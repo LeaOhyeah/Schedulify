@@ -29,12 +29,14 @@
             <div class="card-body">
                 <form action="{{ route('agenda.store') }}">
                     @csrf
-                    
+
                     <div class="form-group">
                         <label for="inputActivity" class="text-dark">Kegiatan*</label>
                         <input type="text" class="form-control" id="inputActivity" aria-describedby="activityHelp"
                             name="activity">
-                        <small id="activityHelp" class="form-text text-danger">error</small>
+                        @error('activity')
+                            <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="form-row">
@@ -42,14 +44,18 @@
                             <label for="inputPic" class="text-dark">PIC*</label>
                             <input type="text" class="form-control" id="inputPic" aria-describedby="picHelp"
                                 name="pic">
-                            <small id="picHelp" class="form-text text-danger">error</small>
+                            @error('pic')
+                                <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="inputDate" class="text-dark">Tanggal*</label>
                             <input type="date" class="form-control" id="inputDate" name="date"
                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-                            <small id="dateHelp" class="form-text text-danger">error</small>
+                            @error('date')
+                                <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
 
@@ -57,13 +63,17 @@
                         <div class="form-group col-md-6">
                             <label for="inputStartTime" class="text-dark">Jam mulai*</label>
                             <input type="time" class="form-control" id="inputStartTime" name="start_time">
-                            <small id="startTimeHelp" class="form-text text-danger">error</small>
+                            @error('start_time')
+                                <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="inputEndTime" class="text-dark">Jam selesai</label>
                             <input type="time" class="form-control" id="inputEndTime" name="end_time">
-                            <small id="endTimeHelp" class="form-text text-danger">error</small>
+                            @error('end_time')
+                                <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
 
@@ -71,7 +81,9 @@
                         <label for="inputLocation" class="text-dark">Lokasi*</label>
                         <input type="text" class="form-control" id="inputLocation" aria-describedby="locationHelp"
                             name="location">
-                        <small id="locationHelp" class="form-text text-danger">error</small>
+                        @error('location')
+                            <small id="activityHelp" class="form-text text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="card-footer d-flex justify-content-between">
