@@ -9,6 +9,9 @@ class Meeting extends Model
 {
     use HasFactory;
 
+
+    protected $guarded = ['id'];
+
     // Relation on model User
     public function user()
     {

@@ -27,12 +27,14 @@
             </div>
 
             <div class="card-body">
-                <form action="">
+                <form action="{{ route('agenda.update', $meeting->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
                     <div class="form-group">
                         <label for="inputActivity" class="text-dark">Kegiatan*</label>
                         <input type="text" class="form-control" id="inputActivity" aria-describedby="activityHelp"
-                            name="activity">
+                            name="activity" value="{{ old('activity', $meeting->activity) }}">
                         <small id="activityHelp" class="form-text text-danger">error</small>
                     </div>
 
@@ -40,14 +42,15 @@
                         <div class="form-group col-md-6">
                             <label for="inputPic" class="text-dark">PIC*</label>
                             <input type="text" class="form-control" id="inputPic" aria-describedby="picHelp"
-                                name="pic">
+                                name="pic" value="{{ old('pic', $meeting->pic) }}">
                             <small id="picHelp" class="form-text text-danger">error</small>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="inputDate" class="text-dark">Tanggal*</label>
                             <input type="date" class="form-control" id="inputDate" name="date"
-                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                value="{{ old('date', $meeting->date) }}">
                             <small id="dateHelp" class="form-text text-danger">error</small>
                         </div>
                     </div>
@@ -55,13 +58,15 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputStartTime" class="text-dark">Jam mulai*</label>
-                            <input type="time" class="form-control" id="inputStartTime" name="start_time">
+                            <input type="time" class="form-control" id="inputStartTime" name="start_time"
+                                value="{{ old('start_time', $meeting->start_time) }}">
                             <small id="startTimeHelp" class="form-text text-danger">error</small>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="inputEndTime" class="text-dark">Jam selesai</label>
-                            <input type="time" class="form-control" id="inputEndTime" name="end_time">
+                            <input type="time" class="form-control" id="inputEndTime" name="end_time"
+                                value="{{ old('end_time', $meeting->end_time) }}">
                             <small id="endTimeHelp" class="form-text text-danger">error</small>
                         </div>
                     </div>
@@ -69,13 +74,13 @@
                     <div class="form-group">
                         <label for="inputLocation" class="text-dark">Lokasi*</label>
                         <input type="text" class="form-control" id="inputLocation" aria-describedby="locationHelp"
-                            name="location">
+                            name="location" value="{{ old('location', $meeting->location) }}">
                         <small id="locationHelp" class="form-text text-danger">error</small>
                     </div>
 
                     <div class="card-footer d-flex justify-content-between">
                         <a href="{{ route('agenda.index') }}" class="btn btn-secondary">Batal</a>
-                        <button type="submit" class="btn btn-primary">Tambahkan</button>
+                        <button type="submit" class="btn btn-primary">Perbarui</button>
                     </div>
 
                 </form>

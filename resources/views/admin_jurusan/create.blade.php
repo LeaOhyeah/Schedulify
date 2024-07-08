@@ -27,8 +27,9 @@
             </div>
 
             <div class="card-body">
-                <form action="">
-
+                <form action="{{ route('agenda.store') }}">
+                    @csrf
+                    
                     <div class="form-group">
                         <label for="inputActivity" class="text-dark">Kegiatan*</label>
                         <input type="text" class="form-control" id="inputActivity" aria-describedby="activityHelp"
