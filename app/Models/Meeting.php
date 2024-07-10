@@ -24,4 +24,9 @@ class Meeting extends Model
         return $this->hasMany(Participant::class);
     }
 
+    // Relation on model Minutes
+    public function minutes()
+    {
+        return $this->hasOne(Minutes::class);
+    }
 }

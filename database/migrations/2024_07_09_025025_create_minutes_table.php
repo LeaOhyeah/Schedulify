@@ -9,14 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-        public function up(): void
+    public function up(): void
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('minutes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meeting_id')->constrained('meetings');
-            $table->string('name');
-            $table->string('position');
-            $table->string('signature');
+            $table->string('basis')->comment('dasar');
+            $table->string('chairperson')->comment('pimpinan rapat');
+            $table->text('meeting_notes')->comment('isi notulesni'); 
+            $table->string('method')->comment('metode');
+            $table->string('outcome')->comment('hasil');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('participants');
+        Schema::dropIfExists('minutes');
     }
 };

@@ -16,25 +16,12 @@
 @endsection
 
 @section('content')
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-
-        @if (session()->has('success'))
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>Sukses</strong> {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        <!-- DataTales Example -->
-        {{-- <div class="card shadow mb-4">
+<div class="container-fluid">
+    <!-- DataTales Example today -->
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-gray-800">Daftar Agenda (Nama Jurusan) semua</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Daftar Agenda Hari Ini (Nama Jurusan)</h1>
                     <a href="{{ route('agenda.create') }}" class="btn btn-primary btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-plus"></i>
@@ -43,8 +30,8 @@
                     </a>
                 </div>
             </div>
-
-
+        
+        
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -57,7 +44,7 @@
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
                                 <th></th>
-                                <th>Buka presensi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -69,42 +56,39 @@
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
                                 <th></th>
-                                <th>Buka presensi</th>
+                                <th>Aksi</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @foreach ($meetings as $m)
+                            @foreach ($meetings_today as $mt)
                                 <tr>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->activity }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->activity }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->date }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->date }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->location }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->location }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->start_time }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->start_time }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->end_time ?? 'Sampai Selesai' }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->end_time ?? 'Sampai Selesai' }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('agenda.edit', $m->id) }}">
-                                            {{ $m->pic }}
+                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                            {{ $mt->pic }}
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('agenda.destroy', $m->id) }}" method="POST"
-                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $m->activity }}?')">
+                                        <form action="{{ route('agenda.destroy', $mt->id) }}" method="POST"
+                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $mt->activity }}?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger btn-circle">
@@ -112,9 +96,10 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td>
-                                        <a href="#" onclick="copyToClipboard('{{ route('presensi.peserta', bin2hex(Crypt::encryptString($m->id))) }}')">Copy
-                                            Link</a>
+                                    <td class="d-flex justify-content-between">
+                                        <a href="#"
+                                            class="btn btn-sm btn-primary" onclick="copyToClipboard('{{ route('presensi.peserta', bin2hex(Crypt::encryptString($mt->id))) }}')">Link Presensi</a>
+                                            <a class="btn btn-sm btn-outline-primary" href="{{ route('minutes.create', $mt->id) }}">Buat Notulensi</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -122,12 +107,8 @@
                     </table>
                 </div>
             </div>
-        </div> --}}
-
-
-
-    </div>
-    <!-- /.container-fluid -->
+        </div>
+        </div>
 @endsection
 
 @section('js')
@@ -148,18 +129,18 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('template/js/demo/datatables-demo.js') }}"></script>
 
-        <script>
-            function copyToClipboard(link) {
-                // Membuat elemen textarea secara dinamis untuk menyalin teks
-                var tempInput = document.createElement("textarea");
-                tempInput.value = link;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
+    <script>
+        function copyToClipboard(link) {
+            // Membuat elemen textarea secara dinamis untuk menyalin teks
+            var tempInput = document.createElement("textarea");
+            tempInput.value = link;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
 
-                // Menampilkan pesan notifikasi (opsional)
-                alert("Link telah disalin ke clipboard!");
-            }
-        </script>
+            // Menampilkan pesan notifikasi (opsional)
+            alert("Link telah disalin ke clipboard!");
+        }
+    </script>
 @endsection
