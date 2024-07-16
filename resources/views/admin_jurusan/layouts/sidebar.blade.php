@@ -25,26 +25,27 @@
      <hr class="sidebar-divider">
 
      <!-- Nav Item - Tables -->
-     <li class="nav-item {{ request()->is('dashboard-jurusan/agenda*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('agenda.index') }}">
+     <li class="nav-item {{ request()->is('dashboard-jurusan/agenda') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('admin_jurusan.meetings.index') }}">
                <i class="fas fa-fw fa-calendar"></i>
-               <span>Agenda</span></a>
+               <span>Seluruh Agenda</span></a>
      </li>
 
      <!-- Nav Item - Pages Collapse Menu -->
-     <!-- <li class="nav-item">
+     <li class="nav-item">
           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                aria-controls="collapseTwo">
                <i class="fas fa-fw fa-cog"></i>
                <span>Manajemen Agenda</span>
           </a>
-          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Presensi Kehadiran</a>
-                    <a class="collapse-item" href="cards.html">Notulensi</a>
+                    <a class="collapse-item {{ request()->is('dashboard-jurusan/agenda-hari-ini') ? 'active' : '' }}" href="{{ route('admin_jurusan.meetings.today') }}">Agenda Hari Ini</a>
+                    <a class="collapse-item {{ request()->is('dashboard-jurusan/agenda-mendatang') ? 'active' : '' }}" href="{{ route('admin_jurusan.meetings.upcoming') }}">Agenda Mendatang</a>
+                    <a class="collapse-item {{ request()->is('dashboard-jurusan/agenda-riwayat') ? 'active' : '' }}" href="{{ route('admin_jurusan.meetings.completed') }}">Arsip Agenda</a>
                </div>
           </div>
-     </li> -->
+     </li>
 
      <!-- Divider -->
      <hr class="sidebar-divider d-none d-md-block">

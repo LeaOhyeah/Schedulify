@@ -16,31 +16,15 @@
 @endsection
 
 @section('content')
-    <!-- Begin Page Content -->
     <div class="container-fluid">
 
-        <!-- Page Heading -->
 
-        @if (session()->has('success'))
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <strong>Sukses</strong> {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
 
-        <!-- DataTales Example -->
+        <!-- DataTales Example archive -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 bg-primary">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-light">Daftar Seluruh Agenda {{ auth()->user()->departement }} </h1>
-                    <a href="{{ route('admin_jurusan.meetings.create') }}" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Baru</span>
-                    </a>
+                    <h1 class="h3 mb-0 text-light">Riwayat Agenda {{ auth()->user()->departement }}</h1>
                 </div>
             </div>
 
@@ -71,41 +55,42 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @foreach ($meetings as $m)
+                            @foreach ($meetings_archive as $ma)
                                 <tr>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->activity }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->activity }}
                                         </a>
                                     </td>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->date }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->date }}
                                         </a>
                                     </td>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->location }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->location }}
                                         </a>
                                     </td>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->start_time }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->start_time }}
                                         </a>
                                     </td>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->end_time ?? 'Sampai Selesai' }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->end_time ?? 'Sampai Selesai' }}
                                         </a>
                                     </td>
                                     <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->pic }}
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
+                                            {{ $ma->pic }}
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin_jurusan.meetings.destroy', $m->id) }}" method="POST"
-                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $m->activity }}?')">
+                                        <form action="{{ route('admin_jurusan.meetings.destroy', $ma->id) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $ma->activity }}?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger btn-circle">
@@ -120,11 +105,7 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
-    <!-- /.container-fluid -->
 @endsection
 
 @section('js')

@@ -20,14 +20,32 @@
 @section('content')
     <div class="container-fluid">
 
+        @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        @if (session()->has('error'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Gagal</strong> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <div class="m-5 card shadow-lg">
 
             <div class="card-header bg-primary p-3">
-                <h1 class="h3 mb-0 text-light">Perbarui Agenda, (Nama Jurusan)</h1>
+                <h1 class="h3 mb-0 text-light">Perbarui Agenda, {{ auth()->user()->departement }}</h1>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('agenda.update', $meeting->id) }}" method="POST">
+                <form action="{{ route('admin_jurusan.meetings.update', $meeting->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -91,7 +109,7 @@
                     </div>
 
                     <div class="card-footer d-flex justify-content-between">
-                        <a href="{{ route('agenda.index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('admin_jurusan.meetings.index') }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">Perbarui</button>
                     </div>
 
