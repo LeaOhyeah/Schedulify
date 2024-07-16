@@ -34,13 +34,8 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 bg-primary">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-light">Daftar Seluruh Agenda {{ auth()->user()->departement }} </h1>
-                    <a href="{{ route('admin_jurusan.meetings.create') }}" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Baru</span>
-                    </a>
+                    <h1 class="h3 mb-0 text-light">Daftar Hadir {{ $meeting->activity }}</h1>
+
                 </div>
             </div>
 
@@ -50,68 +45,36 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class="text-dark">
                             <tr>
-                                <th>Kegiatan</th>
-                                <th>Tanggal</th>
-                                <th>Lokasi</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Selesai</th>
-                                <th>PIC</th>
-                                <th></th>
+                                <th>NO</th>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Tanda Tangan</th>
                             </tr>
                         </thead>
                         <tfoot class="text-dark">
                             <tr>
-                                <th>Kegiatan</th>
-                                <th>Tanggal</th>
-                                <th>Lokasi</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Selesai</th>
-                                <th>PIC</th>
-                                <th></th>
+                                <th>NO</th>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Tanda Tangan</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @foreach ($meetings as $m)
+                            @foreach ($participants as $p)
                                 <tr>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->activity }}
-                                        </a>
-                                    </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->date }}
-                                        </a>
-                                    </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->location }}
-                                        </a>
-                                    </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->start_time }}
-                                        </a>
-                                    </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->end_time ?? 'Sampai Selesai' }}
-                                        </a>
-                                    </td>
-                                    <td><a class="text-decoration-none text-dark"
-                                            href="{{ route('admin_jurusan.meetings.edit', $m->id) }}">
-                                            {{ $m->pic }}
-                                        </a>
+                                    <td>
+                                        {{ $loop->iteration }}
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin_jurusan.meetings.destroy', $m->id) }}" method="POST"
-                                            onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $m->activity }}?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger btn-circle">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        {{ $p->name }}
+                                    </td>
+                                    <td>
+                                        {{ $p->position }}
+
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset('storage/' . $p->signature) }}" alt=""
+                                            style="width: 150px;">
                                     </td>
                                 </tr>
                             @endforeach

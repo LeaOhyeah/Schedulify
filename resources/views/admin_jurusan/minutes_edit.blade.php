@@ -30,21 +30,40 @@
     @endphp
 
     <div class="container-fluid">
+        @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         <!-- DataTales Example schedule -->
         <div class="card shadow mb-4">
             <div class="card-header bg-primary py-3">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-light">Notulensi {{ $meeting->activity }}</h1>
+                    <h1 class="h3 mb-0 text-light">Perbarui Notulensi {{ $meeting->activity }}</h1>
+                    <a href="{{ route('minutes.print', $minutes->id) }}" class="text-light">Cetak</a>
                 </div>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('admin_jurusan.minutes.store', $meeting->id) }}" method="POST">
+                <form action="{{ route('admin_jurusan.minutes.update', $minutes->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
                     <div class="form-group">
                         <label for="inputBasis" class="text-dark">Dasar*</label>
-                        <textarea class="form-control" id="inputBasis" name="basis"> {{ old('basis') }} </textarea>
+                        <textarea class="form-control" id="inputBasis" name="basis">{{ old('basis', $minutes->basis) }}</textarea>
                         @error('basis')
                             <small id="basisHelp" class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -52,8 +71,8 @@
 
                     <div class="form-group">
                         <label for="inputChairperson" class="text-dark">Pimpinan Rapat*</label>
-                        <input value="{{ old('chairperson') }}" type="text" class="form-control" id="inputChairperson"
-                            name="chairperson">
+                        <input type="text" class="form-control" id="inputChairperson" name="chairperson"
+                            value="{{ old('chairperson', $minutes->chairperson) }}">
                         @error('chairperson')
                             <small id="chairpersonHelp" class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -67,8 +86,8 @@
 
                     <div class="form-group">
                         <label for="inputMinuteTaker" class="text-dark">Notulis*</label>
-                        <input value="{{ old('minute_taker') }}" type="text" class="form-control" id="inputMinuteTaker"
-                            name="minute_taker">
+                        <input type="text" class="form-control" id="inputMinuteTaker" name="minute_taker"
+                            value="{{ old('minute_taker', $minutes->minute_taker) }}">
                         @error('minute_taker')
                             <small id="minuteTakerHelp" class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -96,7 +115,8 @@
 
                     <div class="form-group">
                         <label for="inputMethod" class="text-dark">Metode*</label>
-                        <input  value="{{ old('method') }}"  type="text" class="form-control" id="inputMethod" name="method">
+                        <input type="text" class="form-control" id="inputMethod" name="method"
+                            value="{{ old('method', $minutes->method) }}">
                         @error('method')
                             <small id="methodHelp" class="form-text text-danger">{{ $message }}</small>
                         @enderror
@@ -104,21 +124,22 @@
 
                     <div class="form-group">
                         <label for="inputOutcome" class="text-dark">Hasil*</label>
-                        <textarea class="form-control" id="inputOutcome" name="outcome"> {{ old('outcome') }}</textarea>
+                        <textarea class="form-control" id="inputOutcome" name="outcome">{{ old('outcome', $minutes->outcome) }}</textarea>
                         @error('outcome')
                             <small id="outcomeHelp" class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="card-footer d-flex justify-content-between">
-                        <button type="reset" class="btn btn-secondary">Batal</button>
-                        <button type="submit" class="btn btn-primary">Tambahkan</button>
+                        <a href="{{ route('admin_jurusan.meetings.index') }}" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary">Perbarui</button>
                     </div>
 
                 </form>
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('js')

@@ -16,26 +16,35 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <!-- DataTales Example today -->
+    <div class="container-fluid">
+        @if (session()->has('success'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Sukses</strong> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <!-- DataTales Example today -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
+            <div class="card-header py-3 bg-primary">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-gray-800">Daftar Agenda Hari Ini (Nama Jurusan)</h1>
-                    <a href="{{ route('agenda.create') }}" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Baru</span>
-                    </a>
+                    <h1 class="h3 mb-0 text-light">Daftar Agenda {{ auth()->user()->departement }} Hari Ini </h1>
                 </div>
             </div>
-        
-        
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                        <thead class="text-dark">
                             <tr>
                                 <th>Kegiatan</th>
                                 <th>Tanggal</th>
@@ -43,11 +52,11 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
+                                <th>Administrasi</th>
                                 <th></th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tfoot>
+                        <tfoot class="text-dark">
                             <tr>
                                 <th>Kegiatan</th>
                                 <th>Tanggal</th>
@@ -55,39 +64,63 @@
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
                                 <th>PIC</th>
+                                <th>Administrasi</th>
                                 <th></th>
-                                <th>Aksi</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @foreach ($meetings_today as $mt)
                                 <tr>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->activity }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->date }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->location }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->start_time }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->end_time ?? 'Sampai Selesai' }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $mt->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $mt->id) }}">
                                             {{ $mt->pic }}
                                         </a>
                                     </td>
+                                    <td class="d-flex justify-content-between">
+                                        <div class="btn-group" role="group">
+                                            <a href="#" class="btn btn-sm btn-outline-primary font-weight-bolder"
+                                                onclick="copyToClipboard('{{ route('presensi.peserta', bin2hex(Crypt::encryptString($mt->id))) }}')">Link
+                                                Presensi</a>
+                                            @if ($mt->minutes)
+                                                <a class="btn btn-sm btn-outline-primary font-weight-bolder"
+                                                    href="{{ route('admin_jurusan.minutes.edit', $mt->id) }}">Edit Notulensi</a>
+                                            @else
+                                                <a class="btn btn-sm btn-outline-primary font-weight-bolder"
+                                                    href="{{ route('admin_jurusan.minutes.create', $mt->id) }}">Buat Notulensi</a>
+                                            @endif
+                                            <a class="btn btn-sm btn-outline-primary font-weight-bolder"
+                                                href="{{ route('admin_jurusan.participants.index', $mt->id) }}">Daftar Hadir</a>
+                                        </div>
+
+                                    </td>
                                     <td>
-                                        <form action="{{ route('agenda.destroy', $mt->id) }}" method="POST"
+                                        <form action="{{ route('admin_jurusan.meetings.destroy', $mt->id) }}"
+                                            method="POST"
                                             onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $mt->activity }}?')">
                                             @csrf
                                             @method('DELETE')
@@ -96,11 +129,6 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td class="d-flex justify-content-between">
-                                        <a href="#"
-                                            class="btn btn-sm btn-primary" onclick="copyToClipboard('{{ route('presensi.peserta', bin2hex(Crypt::encryptString($mt->id))) }}')">Link Presensi</a>
-                                            <a class="btn btn-sm btn-outline-primary" href="{{ route('minutes.create', $mt->id) }}">Buat Notulensi</a>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -108,7 +136,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 @endsection
 
 @section('js')

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,11 +13,11 @@ return new class extends Migration
         Schema::create('minutes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meeting_id')->constrained('meetings');
-            $table->string('basis')->comment('dasar');
+            $table->string('basis', 600)->comment('dasar');
             $table->string('chairperson')->comment('pimpinan rapat');
-            $table->text('meeting_notes')->comment('isi notulesni'); 
+            $table->string('minute_taker')->comment('notulis');
             $table->string('method')->comment('metode');
-            $table->string('outcome')->comment('hasil');
+            $table->text('outcome')->comment('hasil');
             $table->timestamps();
         });
     }

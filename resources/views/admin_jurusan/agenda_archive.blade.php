@@ -17,28 +17,22 @@
 
 @section('content')
     <div class="container-fluid">
-   
-      
+
+
 
         <!-- DataTales Example archive -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
+            <div class="card-header py-3 bg-primary">
                 <div class="d-flex justify-content-between">
-                    <h1 class="h3 mb-0 text-gray-800">Riwayat Agenda (Nama Jurusan)</h1>
-                    <a href="{{ route('agenda.create') }}" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Baru</span>
-                    </a>
+                    <h1 class="h3 mb-0 text-light">Riwayat Agenda {{ auth()->user()->departement }}</h1>
                 </div>
             </div>
-        
-        
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                        <thead class="text-dark">
                             <tr>
                                 <th>Kegiatan</th>
                                 <th>Tanggal</th>
@@ -49,7 +43,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tfoot>
+                        <tfoot class="text-dark">
                             <tr>
                                 <th>Kegiatan</th>
                                 <th>Tanggal</th>
@@ -63,32 +57,39 @@
                         <tbody>
                             @foreach ($meetings_archive as $ma)
                                 <tr>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->activity }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->date }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->location }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->start_time }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->end_time ?? 'Sampai Selesai' }}
                                         </a>
                                     </td>
-                                    <td><a class="text-decoration-none text-dark" href="{{ route('agenda.edit', $ma->id) }}">
+                                    <td><a class="text-decoration-none text-dark"
+                                            href="{{ route('admin_jurusan.meetings.edit', $ma->id) }}">
                                             {{ $ma->pic }}
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('agenda.destroy', $ma->id) }}" method="POST"
+                                        <form action="{{ route('admin_jurusan.meetings.destroy', $ma->id) }}"
+                                            method="POST"
                                             onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $ma->activity }}?')">
                                             @csrf
                                             @method('DELETE')
